@@ -60,4 +60,20 @@ router.put('/:id', (req, res) => {
         })
 });
 
+router.delete('/:id', (req, res) => {
+    const changes = req.body;
+
+
+    knex('accounts')
+        .where({ id: req.params.id })
+        .del()
+        .then(count => { // how many records/rows were deleted
+            res.status(200).json(count);
+        })
+        .catch(err => {
+            res.status(500).json({ error: 'Failed to delete post from database'})
+        })
+
+});
+
 module.exports = router;
