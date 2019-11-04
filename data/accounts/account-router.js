@@ -14,7 +14,7 @@ router.get('/', (req, res) => {
             res.status(200).json(accounts);
         })
         .catch(err => {
-            res.status(500).json({ error: 'Failed to get posts from database'})
+            res.status(500).json({ error: 'Failed to get accounts from database'})
         })
 })
 
@@ -28,7 +28,7 @@ router.get('/:id', (req, res) => {
             res.status(200).json(account);
         })
         .catch(err => {
-            res.status(500).json({ error: 'Failed to get posts from database'})
+            res.status(500).json({ error: 'Failed to get the account from database'})
         })
 })
 
@@ -41,7 +41,22 @@ router.post('/', (req, res) => {
             res.status(201).json(id);
         })
         .catch(err => {
-            res.status(500).json({ error: 'Failed to insert post to database'})
+            res.status(500).json({ error: 'Failed to insert the account to database'})
+        })
+});
+
+router.put('/:id', (req, res) => {
+    const id = req.params.id;
+    const changes = req.body;
+
+    knex('accounts')
+        .where({ id: req.params.id })
+        .update(changes)
+        .then(count => { // how many records/rows were updated
+            res.status(200).json(count);
+        })
+        .catch(err => {
+            res.status(500).json({ error: 'Failed to update the account in database'})
         })
 });
 
