@@ -49,34 +49,47 @@ router.get('/:id', (req, res) => {
         })
 })
 
+// // original code for today's assignment
+// router.get('/:id', (req, res) => {
+//     knex
+//         .select('*')
+//         .from('accounts')
+//         .where('id', '=', req.params.id)
+//         .first()
+//         .then(account => {
+//             res.status(200).json(account);
+//         })
+//         .catch(err => {
+//             res.status(500).json({ error: 'Failed to get the account from database'})
+//         })
+// })
 
-// original code for today's assignment
-router.get('/:id', (req, res) => {
-    knex
-        .select('*')
-        .from('accounts')
-        .where('id', '=', req.params.id)
-        .first()
-        .then(account => {
-            res.status(200).json(account);
-        })
-        .catch(err => {
-            res.status(500).json({ error: 'Failed to get the account from database'})
-        })
-})
-
+// .post / refactor using a helper
 router.post('/', (req, res) => {
+    const newAccount = req.body;
 
-    knex    
-        .insert(req.body, 'id') 
-        .into('accounts')
-        .then(id => {
-            res.status(201).json(id);
+    dbAccounts.insert(newAccount)
+        .then(account => {
+            res.status(201).json(account);
         })
         .catch(err => {
             res.status(500).json({ error: 'Failed to insert the account to database'})
         })
 });
+
+// original code for today's assignment
+// router.post('/', (req, res) => {
+
+//     knex    
+//         .insert(req.body, 'id') 
+//         .into('accounts')
+//         .then(id => {
+//             res.status(201).json(id);
+//         })
+//         .catch(err => {
+//             res.status(500).json({ error: 'Failed to insert the account to database'})
+//         })
+// });
 
 router.put('/:id', (req, res) => {
     const id = req.params.id;

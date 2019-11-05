@@ -2,7 +2,8 @@ const db = require('../dbConfig');
 
 module.exports = {
     find,
-    getById
+    getById,
+    insert
 };
 
 async function find(query = {}) {
@@ -17,6 +18,15 @@ async function find(query = {}) {
 
 function getById(id) {
     return db('accounts')
-      .where({ id })
-      .first();
+    .where({ id })
+    .first();
+}
+
+function insert(user) {
+    return db('accounts')
+      .insert(user)
+      .then(ids => {
+        return getById(ids[0]);
+      });
   }
+  
