@@ -7,6 +7,7 @@ const dbAccounts = require('./account-helper');
 
 const router = express.Router();
 
+// refactored code using helpers
 router.get('/', (req, res) => {
     const account = req.query;
     
@@ -19,21 +20,37 @@ router.get('/', (req, res) => {
         })
 })
 
-router.get('/', (req, res) => {
+// original code for today's lesson
+// router.get('/', (req, res) => {
     
-    
-    knex
-        .select('*')
-        .from('accounts')
-        .where({})
-        .then(accounts => {
-            res.status(200).json(accounts);
+//     knex
+//         .select('*')
+//         .from('accounts')
+//         .where({})
+//         .then(accounts => {
+//             res.status(200).json(accounts);
+//         })
+//         .catch(err => {
+//             res.status(500).json({ error: 'Failed to get accounts from database'})
+//         })
+// })
+
+
+// .get /:id refactor using a helper
+router.get('/:id', (req, res) => {
+    const {id} = req.params
+
+    dbAccounts.getById(id)
+        .then(account => {
+            res.status(200).json(account);
         })
         .catch(err => {
-            res.status(500).json({ error: 'Failed to get accounts from database'})
+            res.status(500).json({ error: 'Failed to get the account from database'})
         })
 })
 
+
+// original code for today's assignment
 router.get('/:id', (req, res) => {
     knex
         .select('*')

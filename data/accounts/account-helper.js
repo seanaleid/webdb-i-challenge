@@ -2,6 +2,7 @@ const db = require('../dbConfig');
 
 module.exports = {
     find,
+    getById
 };
 
 async function find(query = {}) {
@@ -13,3 +14,9 @@ async function find(query = {}) {
 
     return rows;
 }
+
+function getById(id) {
+    return db('accounts')
+      .where({ id })
+      .first();
+  }
