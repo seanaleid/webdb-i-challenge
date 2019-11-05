@@ -105,28 +105,28 @@ router.put('/:id', (req, res) => {
         })
 });
 
-router.put('/:id', (req, res) => {
-    const id = req.params.id;
-    const changes = req.body;
+// original code for today's assignment
+// router.put('/:id', (req, res) => {
+//     const id = req.params.id;
+//     const changes = req.body;
 
-    knex('accounts')
-        .where({ id: req.params.id })
-        .update(changes)
-        .then(count => { // how many records/rows were updated
-            res.status(200).json(count);
-        })
-        .catch(err => {
-            res.status(500).json({ error: 'Failed to update the account in database'})
-        })
-});
+//     knex('accounts')
+//         .where({ id: req.params.id })
+//         .update(changes)
+//         .then(count => { // how many records/rows were updated
+//             res.status(200).json(count);
+//         })
+//         .catch(err => {
+//             res.status(500).json({ error: 'Failed to update the account in database'})
+//         })
+// });
 
+// .delete refactor using a helper
 router.delete('/:id', (req, res) => {
-    const changes = req.body;
+    const {id} = req.params;
 
 
-    knex('accounts')
-        .where({ id: req.params.id })
-        .del()
+    dbAccounts.remove(id)
         .then(count => { // how many records/rows were deleted
             res.status(200).json(count);
         })
@@ -135,5 +135,22 @@ router.delete('/:id', (req, res) => {
         })
 
 });
+
+// original code from today's assignment
+// router.delete('/:id', (req, res) => {
+//     const changes = req.body;
+
+
+//     knex('accounts')
+//         .where({ id: req.params.id })
+//         .del()
+//         .then(count => { // how many records/rows were deleted
+//             res.status(200).json(count);
+//         })
+//         .catch(err => {
+//             res.status(500).json({ error: 'Failed to delete post from database'})
+//         })
+
+// });
 
 module.exports = router;
