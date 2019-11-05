@@ -3,7 +3,8 @@ const db = require('../dbConfig');
 module.exports = {
     find,
     getById,
-    insert
+    insert,
+    update
 };
 
 async function find(query = {}) {
@@ -24,9 +25,14 @@ function getById(id) {
 
 function insert(user) {
     return db('accounts')
-      .insert(user)
-      .then(ids => {
+    .insert(user)
+    .then(ids => {
         return getById(ids[0]);
-      });
-  }
-  
+    });
+}
+
+function update(id, changes) {
+    return db('accounts')
+    .where({ id })
+    .update(changes);
+}

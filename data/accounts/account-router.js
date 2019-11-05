@@ -91,6 +91,20 @@ router.post('/', (req, res) => {
 //         })
 // });
 
+// .put refactor using a helper
+router.put('/:id', (req, res) => {
+    const {id} = req.params;
+    const changes = req.body;
+
+    dbAccounts.update(id, changes)
+        .then(count => { // how many records/rows were updated
+            res.status(200).json(count);
+        })
+        .catch(err => {
+            res.status(500).json({ error: 'Failed to update the account in database'})
+        })
+});
+
 router.put('/:id', (req, res) => {
     const id = req.params.id;
     const changes = req.body;
